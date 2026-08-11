@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,9 +16,10 @@ use Tests\TestCase;
 |
 */
 
+
 pest()->extend(TestCase::class)
- // ->use(RefreshDatabase::class)
-    ->in('Feature');
+    ->use(RefreshDatabase::class)
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,17 @@ expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
 
+function createTenant(array $attributes = []): \Stancl\Tenancy\Database\Models\Tenant
+{
+    $tenant = \Stancl\Tenancy\Database\Models\Tenant::factory()->create($attributes);
+    $tenant->domains()->create(['domain' => $tenant->id . '.localhost']);
+    return $tenant;
+}
+
+function tenantContext(\Stancl\Tenancy\Database\Models\Tenant $tenant, callable $callback): mixed
+{
+    return $tenant->run($callback);
+}
 /*
 |--------------------------------------------------------------------------
 | Functions

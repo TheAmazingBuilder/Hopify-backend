@@ -15,11 +15,19 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // 0. Insurance Companies
+        Schema::create('insurance_companies', function (Blueprint $table) {
+            $table->uuid('uuid')->primary();
+            $table->string('name');
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         // 1. Table principale des Patients
         Schema::create('patients', function (Blueprint $table) {
             $table->uuid('uuid')->primary(); 
-            $table->foreignUuid('tenant_id')->constrained('tenants', 'id')->cascadeOnDelete();
-            $table->foreignUuid('user_id')->nullable()->constrained('users', 'id')->nullOnDelete();
+            $table->foreignUuid('user_uuid')->nullable()->constrained('users', 'id')->nullOnDelete();
 
             $table->string('mrn', 20); 
             $table->string('fname', 100);
@@ -92,14 +100,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        // 6. Insurance Companies
-        Schema::create('insurance_companies', function (Blueprint $table) {
-            $table->uuid('uuid')->primary();
-            $table->string('name');
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-            $table->softDeletes();
-        });
     }
 
     public function down(): void

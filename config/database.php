@@ -5,6 +5,19 @@ use Pdo\Mysql;
 
 return [
 
+    'tenant' => [ 
+        'driver' => 
+        'pgsql', 'host' => env('TENANT_DB_HOST', env('DB_HOST', '127.0.0.1')), 
+        'port' => env('TENANT_DB_PORT', env('DB_PORT', '5432')), 
+        'database' => null, // ← injecté dynamiquement par Stancl 
+        'username' => env('TENANT_DB_USERNAME', env('DB_USERNAME')), 
+        'password' => env('TENANT_DB_PASSWORD', env('DB_PASSWORD')), 
+        'charset' => 'utf8', 'prefix' => '', 
+        'schema' => 'public', 
+        'sslmode' => env('DB_SSLMODE', 'prefer'), 
+    ], 
+ // Queue: utiliser Redis pour que QueueTenancyBootstrapper // puisse injecter le tenant dans chaque job 'default' => env('DB_CONNECTION', 'pgsql'),
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
