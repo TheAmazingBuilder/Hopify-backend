@@ -13,4 +13,9 @@ Route::middleware(['api','auth:sanctum',
     Route::get('appointments', [AppointmentController::class, 'index']);
     Route::post('appointments', [AppointmentController::class, 'store']);
     Route::patch('appointments/{uuid}/cancel', [AppointmentController::class, 'cancel']);
+
+    Route::post('appointments/{uuid}/confirm', [AppointmentController::class, 'confirm']);
+    Route::post('appointments/{uuid}/complete', [AppointmentController::class, 'complete']);
+    Route::get('appointments/doctor/{doctorUuid}', [AppointmentController::class, 'byDoctor']);
+    Route::get('appointments/patient/{patientUuid}', [AppointmentController::class, 'byPatient']);
 });

@@ -5,6 +5,8 @@ namespace App\Modules\Scheduling;
 use Illuminate\Support\ServiceProvider;
 use App\Modules\Scheduling\Repositories\AppointmentRepositoryInterface;
 use App\Modules\Scheduling\Repositories\AppointmentRepository;
+use App\Modules\Scheduling\Repositories\DoctorScheduleRepositoryInterface;
+use App\Modules\Scheduling\Repositories\DoctorScheduleRepository;
 
 class SchedulingServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,8 @@ class SchedulingServiceProvider extends ServiceProvider
     {
         // Bind du Repository
         $this->app->bind(AppointmentRepositoryInterface::class, AppointmentRepository::class);
+        $this->app->bind(DoctorScheduleRepositoryInterface::class, DoctorScheduleRepository::class);
+
     }
 
     /**
