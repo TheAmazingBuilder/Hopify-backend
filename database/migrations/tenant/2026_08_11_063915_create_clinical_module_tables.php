@@ -24,7 +24,7 @@ return new class extends Migration
         Schema::create('consultations', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->foreignUuid('patient_uuid')->constrained('patients', 'uuid')->cascadeOnDelete();
-            $table->foreignUuid('doctor_uuid')->constrained('employees', 'uuid')->cascadeOnDelete();
+            $table->foreignUuid('doctor_uuid')->constrained('employees', 'uuid')->restrictOnDelete();
             $table->foreignUuid('appointment_uuid')->nullable()->constrained('appointments', 'uuid')->nullOnDelete();
             $table->foreignUuid('hospitalization_uuid')->nullable()->constrained('hospitalizations', 'uuid')->nullOnDelete();
 
@@ -122,8 +122,8 @@ return new class extends Migration
             $table->uuid('uuid')->primary();
             $table->foreignUuid('consultation_uuid')->nullable()->constrained('consultations', 'uuid')->nullOnDelete();
             $table->foreignUuid('patient_uuid')->constrained('patients', 'uuid')->cascadeOnDelete();
-            $table->foreignUuid('doctor_uuid')->constrained('employees', 'uuid')->cascadeOnDelete();
-            $table->string('prescription_number')->nullable();
+            $table->foreignUuid('doctor_uuid')->constrained('employees', 'uuid')->restrictOnDelete();
+            $table->string('prescription_number')->nullable()->unique();
             $table->string('status', 20)->default('active'); // active, dispensed, cancelled, expired
             $table->text('notes')->nullable();
             $table->timestamp('valid_until')->nullable();
@@ -170,7 +170,7 @@ return new class extends Migration
             $table->foreignUuid('consultation_uuid')->nullable()->constrained('consultations', 'uuid')->nullOnDelete();
             $table->foreignUuid('patient_uuid')->constrained('patients', 'uuid')->cascadeOnDelete();
             $table->foreignUuid('ordered_by_uuid')->constrained('employees', 'uuid')->cascadeOnDelete();
-            $table->string('order_number');
+            $table->string('order_number')->unique();
             $table->string('status', 20)->default('pending');   // pending, in_progress, completed, cancelled
             $table->string('priority', 20)->default('routine'); // routine, urgent, stat
             $table->text('clinical_notes')->nullable();

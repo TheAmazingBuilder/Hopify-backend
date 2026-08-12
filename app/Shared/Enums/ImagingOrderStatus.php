@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Enums;
 
-enum LabOrderStatus: string
+enum ImagingOrderStatus: string
 {
     case Pending = 'pending';
     case InProgress = 'in_progress';

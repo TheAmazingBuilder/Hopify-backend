@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Shared\Enums;
 
-enum LabOrderStatus: string
+enum LabOrderItemStatus: string
 {
     case Pending = 'pending';
-    case InProgress = 'in_progress';
     case Completed = 'completed';
-    case Cancelled = 'cancelled';
 }

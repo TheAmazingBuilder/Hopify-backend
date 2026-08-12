@@ -12,6 +12,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Modules\Hr\Models\Employee;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 #[Fillable(['name', 'email', 'password'])]
@@ -36,5 +38,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class,'employee_uuid','uuid');
     }
 }
